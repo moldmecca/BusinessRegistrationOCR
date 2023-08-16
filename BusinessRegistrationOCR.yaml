@@ -1,0 +1,104 @@
+openapi: 3.0.2
+info:
+  title: MoldON API V1
+  version: 1.0.0
+  description: |-
+    - 사업자등록증 이미지(PDF,PNG,JPG) 파일의 텍스트 정보를 자동으로 추출하는 기능입니다.
+    - 사업자등록증 내 텍스트를 탐지하여 텍스트 영역을 검출한 뒤 결과를 출력합니다.
+    - temporarily added.
+  x-logo: 
+    url: 'https://github.com/myeonggwon/API_1/MoldON_logo.png'
+    altText: A Logo image of MoldON
+paths:
+  /BusinessRegistrationOCR:
+    post:
+      summary: BusinessRegistrationOCR
+      tags:
+        - 사업자 등록증 정보 자동 추출
+      description: >-
+        사업자등록증 이미지(PDF, PNG, JPG)에서 사업자 정보 텍스트를 추출하는 기능 API
+      parameters: []
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              example:
+                input_file: 한국금형산업진흥회_사업자등록증.pdf
+                result:
+                  comp_num: 410-82-13426
+                  comp_nm: (사)한국금형산업진흥회
+                  representative: 박화석
+                  corp_num: 204221-0001963
+                  open_date: 2013년08월01일
+                  address: 광주광역시광산구평동산단로143번길52
+                  publish_date: 2020년03월23일
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Response_BusinessRegistration'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                error: unauthorized
+                status: 401
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Request_Body_BusinessRegistration'
+ 
+servers:
+  - url: http://ec2-52-79-123-200.ap-northeast-2.compute.amazonaws.com:8090/v1
+    description: Production server
+security:
+  - APIKeyAuth: []
+components:
+  securitySchemes:
+    APIKeyAuth:
+      type: apiKey
+      name: x-mold-apigw-api-key
+      in: header
+
+  schemas:
+    Response_BusinessRegistration: 
+      description: Representation of business registration response.
+      type: object
+      properties:
+        result:
+          $ref: '#/components/schemas/result'
+    
+    result:
+      description: 사업자 등록증 이미지에서 추출한 텍스트 정보
+      type: object
+      properties:
+        comp_num:
+          description: 사업자 등록번호
+          type: string
+        comp_nm:
+          description: 법인명(단체명)
+          type: string
+        representative:
+          description: 대표자
+          type: string
+        corp_num:
+          description: 법인등록번호
+          type: string
+        address:
+          description: 사업장 소재지
+          type: string
+        publish_date:
+          description: 사업자등록증 발행일
+          type: string
+    Request_Body_BusinessRegistration:
+      description: BusinessRegistration File UPLOAD
+      required: ["file"]
+      type: object
+      properties:
+        file:
+          title: File
+          type: string
+          format: binary
+    
