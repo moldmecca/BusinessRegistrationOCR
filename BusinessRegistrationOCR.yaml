@@ -5,7 +5,6 @@ info:
   description: |-
     - 사업자등록증 이미지(PDF,PNG,JPG) 파일의 텍스트 정보를 자동으로 추출하는 기능입니다.
     - 사업자등록증 내 텍스트를 탐지하여 텍스트 영역을 검출한 뒤 결과를 출력합니다.
-    - temporarily added.
   x-logo: 
     url: 'https://myeonggwon.github.io/BusinessRegistrationOCR/MoldON_logo.png'
     altText: A Logo image of MoldON
