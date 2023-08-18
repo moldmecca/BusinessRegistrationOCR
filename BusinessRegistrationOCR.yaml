@@ -3,6 +3,7 @@ info:
   title: MoldON API V1
   version: 1.0.0
   description: |-
+    사업자 등록증 정보 자동 추출
     - 사업자등록증 이미지(PDF,PNG,JPG) 파일의 텍스트 정보를 자동으로 추출하는 기능입니다.
     - 사업자등록증 내 텍스트를 탐지하여 텍스트 영역을 검출한 뒤 결과를 출력합니다.
   x-logo: 
@@ -37,23 +38,23 @@ paths:
                 items:
                   $ref: '#/components/schemas/Response_BusinessRegistration'
         '403':
-          description: The API-key is invalid.
+          description: API KEY 오류
           content:
             application/json:
-              schema:
-                type: object
-                properties:
-                  code:
-                    type: string
-                  messages:
-                    type: string
-                  required:
-                    - code
-                    - message
+              example:
+                detail: "The API-key is invalid."      
         '404':
-          descriptiion: "Error : **[filename]** error message"
+          description: 파일 업로드 오류
+          content:
+            application/json:
+              example:
+                detail: "Error : [filename] error message" 
         '405':
-          description: "Error : [get_ocr] error message"
+          description: 결과값 반환 오류
+          content:
+            application/json:
+              example:
+                detail: "Error : [get_ocr] error message"
       requestBody:
         content:
           multipart/form-data:
