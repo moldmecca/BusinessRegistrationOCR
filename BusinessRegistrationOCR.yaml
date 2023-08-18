@@ -6,7 +6,7 @@ info:
     - 사업자등록증 이미지(PDF,PNG,JPG) 파일의 텍스트 정보를 자동으로 추출하는 기능입니다.
     - 사업자등록증 내 텍스트를 탐지하여 텍스트 영역을 검출한 뒤 결과를 출력합니다.
   x-logo: 
-    url: 'https://myeonggwon.github.io/BusinessRegistrationOCR/MoldON_logo.png'
+    url: 'https://moldmecca.github.io/BusinessRegistrationOCR/MoldON_logo.png'
     altText: A Logo image of MoldON
 paths:
   /BusinessRegistrationOCR:
@@ -36,13 +36,24 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Response_BusinessRegistration'
-        '401':
-          description: Unauthorized
+        '403':
+          description: The API-key is invalid.
           content:
             application/json:
-              example:
-                error: unauthorized
-                status: 401
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: string
+                  messages:
+                    type: string
+                  required:
+                    - code
+                    - message
+        '404':
+          descriptiion: "Error : **[filename]** error message"
+        '405':
+          description: "Error : [get_ocr] error message"
       requestBody:
         content:
           multipart/form-data:
