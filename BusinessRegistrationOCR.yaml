@@ -42,7 +42,7 @@ paths:
           content:
             application/json:
               example:
-                detail: "The API-key is invalid."      
+                detail: "The API-key is invalid.. or The API-key has expired.."      
         '404':
           description: 파일 업로드 오류
           content:
